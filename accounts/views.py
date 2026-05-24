@@ -1,17 +1,8 @@
-from rest_framework import generics, status
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from .serializers import RegisterSerializer
-
-class RegisterView(generics.CreateAPIView):
-    serializer_class = RegisterSerializer
+from rest_framework import viewsets
+from .models import Task
+from .serializers import TaskSerializer
 
 
-class LogoutView(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        return Response(
-            {"message": "Logout successful"},
-            status=status.HTTP_200_OK
-        )
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
